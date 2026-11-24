@@ -914,87 +914,74 @@ function App() {
           }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          .glass-orb {
-            animation: none !important;
-          }
+        
+@media (prefers-reduced-motion: reduce) {
+  .glass-orb {
+    animation: none !important;
+  }
 
-          .custom-cursor-ring {
-            transition: none !important;
-          }
-        }        /* College Photo Center Rise Animation */
-.college-stage {
-  position: relative;
-  width: min(440px, 88%);
-  height: 260px;
-  margin: 55px auto 35px;
-  overflow: hidden;
-  border-radius: 22px;
-  perspective: 1000px;
-  isolation: isolate;
-  background: linear-gradient(145deg, #0b3e3c, #071e2b);
-  border: 1px solid rgba(228, 196, 119, 0.65);
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.28),
-    0 0 35px rgba(72, 217, 255, 0.12);
+  .custom-cursor-ring {
+    transition: none !important;
+  }
+
+  .college-stage img {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.college-stage::before {
-  content: "AL HIDAYA ISLAMIC UNIVERSITY";
+/* College Building Rise Animation */
+.college-stage {
   position: absolute;
-  z-index: 3;
-  top: 15px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  color: #f0cf7d;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
+  right: -2%;
+  bottom: 0;
+  width: 62%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .college-stage img {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+  object-fit: contain;
+  object-position: bottom center;
   opacity: 0;
-  transform: translateY(105%) scale(.82) rotateX(15deg);
-  transform-origin: bottom center;
-  animation: collegeRise 1.8s cubic-bezier(.16, 1, .3, 1) .5s forwards;
+  transform: translateY(100%);
+  animation: collegeRise 2s cubic-bezier(.16, 1, .3, 1) .4s forwards;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, .16));
 }
 
 @keyframes collegeRise {
   0% {
     opacity: 0;
-    transform: translateY(105%) scale(.82) rotateX(15deg);
+    transform: translateY(100%);
   }
   70% {
     opacity: 1;
-    transform: translateY(-5%) scale(1.03) rotateX(-2deg);
+    transform: translateY(-2%);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0);
+    transform: translateY(0);
   }
 }
 
 @media (max-width: 700px) {
   .college-stage {
-    width: 90%;
-    height: 210px;
-    margin: 40px auto 25px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .college-stage img {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    width: 100%;
+    height: 48%;
+    right: 0;
+    bottom: 0;
   }
 }
 
@@ -1079,7 +1066,7 @@ function App() {
 
              <div className="college-stage">
   <img
-    src="/college.jpg"
+    src="/assets/college.jpg"
     alt="Al Hidaya Islamic University Campus"
   />
 </div>
