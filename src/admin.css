@@ -1,1 +1,392 @@
-.adminWrap{min-height:100vh;background:#f4f5f1;display:grid;place-items:center;padding:24px;font-family:Manrope,sans-serif}.adminLogin{width:min(100%,420px);background:white;padding:40px;box-shadow:0 20px 60px #123b4515;display:flex;flex-direction:column;gap:16px}.adminKicker{font-size:9px;letter-spacing:2px;color:#16889a;font-weight:800}.adminLogin h1,.adminPage h1{font-size:30px;margin:0;color:#073d4c}.adminLogin p{font-size:12px;line-height:1.7;color:#758489;margin:0 0 8px}.adminLogin label{font-size:11px;font-weight:700;color:#43565c}.adminLogin input{display:block;width:100%;height:44px;margin-top:7px;padding:0 12px;border:1px solid #dce5e2}.adminLogin button,.adminActions button{border:0;background:#07566b;color:white;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:11px;cursor:pointer}.adminLogin>a{font-size:11px;color:#07566b;text-align:center}.adminPage{padding:40px 5%;min-height:100vh;background:#f5f6f2;font-family:Manrope,sans-serif;color:#18383f}.adminPage header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:28px}.adminActions{display:flex;gap:8px;flex-wrap:wrap}.adminActions button{background:#07566b}.adminStats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.adminStats div{background:white;padding:20px;border:1px solid #e7eeeb}.adminStats small,.adminStats b{display:block}.adminStats small{font-size:9px;letter-spacing:1.5px;color:#849295}.adminStats b{font-size:28px;color:#07566b;margin-top:6px}.tableWrap{overflow:auto;background:white;border:1px solid #e7eeeb}table{width:100%;border-collapse:collapse;min-width:900px;font-size:11px}th,td{text-align:left;padding:14px 12px;border-bottom:1px solid #edf0ee;vertical-align:top}th{background:#f7faf8;font-size:9px;letter-spacing:1px;color:#6e8084;text-transform:uppercase}td small{display:block;color:#879497;margin-top:5px;font-size:9px}td select{padding:8px;border:1px solid #dce5e2;background:#fff;font-size:10px}.proofBtn{border:1px solid #d8e6e1;background:#f4faf7;color:#07566b;padding:8px 10px;display:flex;gap:6px;align-items:center;font-size:10px;cursor:pointer}.adminError{background:#fff0ed;color:#9d3828;padding:12px;font-size:11px;margin:12px 0}.emptyState{text-align:center;color:#809094;padding:30px;font-size:12px}.adminFoot{font-size:10px;color:#829195;margin-top:18px}@media(max-width:700px){.adminPage{padding:25px 4%}.adminPage header{align-items:flex-start;flex-direction:column}.adminStats{grid-template-columns:repeat(2,1fr)}.adminLogin{padding:28px}}
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --admin-bg: #f4f7fb;
+  --admin-white: #ffffff;
+  --admin-navy: #101d3a;
+  --admin-blue: #2457e6;
+  --admin-cyan: #16b8cf;
+  --admin-text: #24334d;
+  --admin-muted: #8290a5;
+  --admin-border: #e5eaf2;
+}
+
+.adminWrap {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 15%, #dceaff 0, transparent 35%),
+    radial-gradient(circle at 85% 85%, #d9f8f8 0, transparent 35%),
+    var(--admin-bg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.adminLogin {
+  width: min(100%, 430px);
+  background: var(--admin-white);
+  padding: 42px;
+  border: 1px solid #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 25px 70px #142c5018;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: adminFadeUp .6s ease both;
+}
+
+.adminKicker {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--admin-blue);
+  font-weight: 800;
+}
+
+.adminLogin h1,
+.adminPage h1 {
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.2;
+  margin: 0;
+  color: var(--admin-navy);
+  font-weight: 800;
+  letter-spacing: -1.2px;
+}
+
+.adminLogin p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--admin-muted);
+  margin: 0;
+}
+
+.adminLogin label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--admin-text);
+}
+
+.adminLogin input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  padding: 0 14px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  outline: none;
+  background: #fbfcff;
+  color: var(--admin-text);
+  font: inherit;
+  font-size: 13px;
+  transition: .25s ease;
+}
+
+.adminLogin input:focus {
+  border-color: var(--admin-blue);
+  box-shadow: 0 0 0 4px #2457e615;
+  background: white;
+}
+
+.adminLogin button,
+.adminActions button {
+  border: 0;
+  background: linear-gradient(110deg, var(--admin-blue), #3479f5);
+  color: white;
+  padding: 13px 17px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.adminLogin button:hover,
+.adminActions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px #2457e630;
+}
+
+.adminLogin button:disabled,
+.adminActions button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.adminLogin > a {
+  font-size: 11px;
+  color: var(--admin-blue);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.adminLogin > a:hover {
+  text-decoration: underline;
+}
+
+.adminPage {
+  padding: 42px 5%;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 100% 0%, #e3f5ff 0, transparent 30%),
+    var(--admin-bg);
+  font-family: 'Manrope', sans-serif;
+  color: var(--admin-text);
+}
+
+.adminPage header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  animation: adminFadeUp .5s ease both;
+}
+
+.adminActions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.adminActions button {
+  background: var(--admin-navy);
+}
+
+.adminActions button:nth-child(2) {
+  background: linear-gradient(110deg, var(--admin-blue), #3479f5);
+}
+
+.adminActions button:nth-child(3) {
+  background: #eaf0fa;
+  color: var(--admin-navy);
+}
+
+.adminActions button:nth-child(3):hover {
+  background: #dce7f8;
+  box-shadow: none;
+}
+
+.adminStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.adminStats div {
+  background: white;
+  padding: 22px;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px #172b4d08;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.adminStats div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px #172b4d12;
+}
+
+.adminStats small,
+.adminStats b {
+  display: block;
+}
+
+.adminStats small {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--admin-muted);
+  font-weight: 800;
+}
+
+.adminStats b {
+  font-size: 30px;
+  color: var(--admin-blue);
+  margin-top: 8px;
+  letter-spacing: -1px;
+}
+
+.adminPage > div[style*="display: flex"] {
+  background: white;
+  padding: 10px 14px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  color: var(--admin-muted);
+}
+
+.adminPage > div[style*="display: flex"] input {
+  border: 0 !important;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.tableWrap {
+  overflow: auto;
+  background: white;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px #172b4d08;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+  font-size: 11px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 16px 13px;
+  border-bottom: 1px solid #edf1f6;
+  vertical-align: top;
+}
+
+th {
+  background: #f5f8fd;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #75839a;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+td {
+  color: #34445f;
+  line-height: 1.6;
+}
+
+tbody tr {
+  transition: background .2s ease;
+}
+
+tbody tr:hover {
+  background: #f6f9ff;
+}
+
+td b {
+  color: var(--admin-navy);
+  font-weight: 800;
+}
+
+td small {
+  display: block;
+  color: var(--admin-muted);
+  margin-top: 5px;
+  font-size: 9px;
+}
+
+td select {
+  padding: 8px;
+  border: 1px solid var(--admin-border);
+  border-radius: 7px;
+  background: #fff;
+  font-size: 10px;
+}
+
+.proofBtn {
+  border: 1px solid #dce8fa;
+  background: #f1f6ff;
+  color: var(--admin-blue);
+  padding: 8px 10px;
+  border-radius: 7px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.adminError {
+  background: #fff0ee;
+  color: #a63c35;
+  border: 1px solid #ffd9d4;
+  border-radius: 10px;
+  padding: 13px 15px;
+  font-size: 11px;
+  margin: 12px 0;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--admin-muted);
+  padding: 35px;
+  font-size: 12px;
+}
+
+.adminFoot {
+  font-size: 10px;
+  color: var(--admin-muted);
+  margin-top: 18px;
+  line-height: 1.7;
+}
+
+@keyframes adminFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .adminPage {
+    padding: 25px 4%;
+  }
+
+  .adminPage header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminActions {
+    width: 100%;
+  }
+
+  .adminActions button {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .adminStats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .adminStats div {
+    padding: 16px;
+  }
+
+  .adminStats b {
+    font-size: 25px;
+  }
+
+  .adminLogin {
+    padding: 28px;
+    border-radius: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
