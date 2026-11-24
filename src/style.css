@@ -1185,3 +1185,56 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==================================
+   SCROLL REVEAL ANIMATION
+================================== */
+
+[data-scroll-animate] {
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-scroll-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered card animation */
+
+.featureGrid article[data-scroll-animate],
+.prizeCard[data-scroll-animate] {
+  transition-delay: 0.1s;
+}
+
+.featureGrid article:nth-child(2)[data-scroll-animate],
+.prizeCard.second[data-scroll-animate] {
+  transition-delay: 0.2s;
+}
+
+.featureGrid article:nth-child(3)[data-scroll-animate],
+.prizeCard.third[data-scroll-animate] {
+  transition-delay: 0.3s;
+}
+
+/* Mobile optimization */
+
+@media (max-width: 768px) {
+  [data-scroll-animate] {
+    transform: translateY(20px);
+    transition-duration: 0.65s;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
