@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createClient } from '@supabase/supabase-js'
 import {
@@ -44,7 +45,8 @@ const districtsByState = {
   'Tamil Nadu': ['Ariyalur','Chengalpattu','Chennai','Coimbatore','Cuddalore','Dharmapuri','Dindigul','Erode','Kallakurichi','Kancheepuram','Kanniyakumari','Karur','Krishnagiri','Madurai','Mayiladuthurai','Nagapattinam','Namakkal','Nilgiris','Perambalur','Pudukkottai','Ramanathapuram','Ranipet','Salem','Sivaganga','Tenkasi','Thanjavur','Theni','Thoothukudi','Tiruchirappalli','Tirunelveli','Tirupathur','Tiruppur','Tiruvallur','Tiruvannamalai','Tiruvarur','Vellore','Viluppuram','Virudhunagar'],
   'Telangana': ['Adilabad','Bhadradri Kothagudem','Hanamkonda','Hyderabad','Jagtial','Jangaon','Jayashankar Bhupalpally','Jogulamba Gadwal','Kamareddy','Karimnagar','Khammam','Komaram Bheem Asifabad','Mahabubabad','Mahabubnagar','Mancherial','Medak','Medchal-Malkajgiri','Mulugu','Nagarkurnool','Nalgonda','Narayanpet','Nirmal','Nizamabad','Peddapalli','Rajanna Sircilla','Rangareddy','Sangareddy','Siddipet','Suryapet','Vikarabad','Wanaparthy','Warangal','Yadadri Bhuvanagiri'],
   'Tripura': ['Dhalai','Gomati','Khowai','North Tripura','Sepahijala','South Tripura','Unakoti','West Tripura'],
-  'Uttar Pradesh': ['Agra','Aligarh','Ambedkar Nagar','Amethi','Amroha','Auraiya','Ayodhya','Azamgarh','Baghpat','Bahraich','Ballia','Balrampur','Banda','Barabanki','Bareilly','Basti','Bhadohi','Bijnor','Budaun','Bulandshahr','Chandauli','Chitrakoot','Deoria','Etah','Etawah','Farrukhabad','Fatehpur','Firozabad','Gautam Buddha Nagar','Ghaziabad','Ghazipur','Gonda','Gorakhpur','Hamirpur','Hapur','Hardoi','Hathras','Jalaun','Jaunpur','Jhansi','Kannauj','Kanpur Dehat','Kanpur Nagar','Kasganj','Kaushambi','Kheri','Kushinagar','Lalitpur','Lucknow','Maharajganj','Mahoba','Mainpuri','Mathura','Mau','Meerut','Mirzapur','Moradabad','Muzaffarnagar','Pilibhit','Pratapgarh','Prayagraj','Raebareli','Rampur','Saharanpur','Sambhal','Sant Kabir Nagar','Shahjahanpur','Shamli','Shrawasti','Siddharthnagar','Sitapur','Sonbhadra','Sultanpur','Unnao','Varanasi'],  'Uttarakhand': ['Almora','Bageshwar','Chamoli','Champawat','Dehradun','Haridwar','Nainital','Pauri Garhwal','Pithoragarh','Rudraprayag','Tehri Garhwal','Udham Singh Nagar','Uttarkashi'],
+  'Uttar Pradesh': ['Agra','Aligarh','Ambedkar Nagar','Amethi','Amroha','Auraiya','Ayodhya','Azamgarh','Baghpat','Bahraich','Ballia','Balrampur','Banda','Barabanki','Bareilly','Basti','Bhadohi','Bijnor','Budaun','Bulandshahr','Chandauli','Chitrakoot','Deoria','Etah','Etawah','Farrukhabad','Fatehpur','Firozabad','Gautam Buddha Nagar','Ghaziabad','Ghazipur','Gonda','Gorakhpur','Hamirpur','Hapur','Hardoi','Hathras','Jalaun','Jaunpur','Jhansi','Kannauj','Kanpur Dehat','Kanpur Nagar','Kasganj','Kaushambi','Kheri','Kushinagar','Lalitpur','Lucknow','Maharajganj','Mahoba','Mainpuri','Mathura','Mau','Meerut','Mirzapur','Moradabad','Muzaffarnagar','Pilibhit','Pratapgarh','Prayagraj','Raebareli','Rampur','Saharanpur','Sambhal','Sant Kabir Nagar','Shahjahanpur','Shamli','Shrawasti','Siddharthnagar','Sitapur','Sonbhadra','Sultanpur','Unnao','Varanasi'],
+  'Uttarakhand': ['Almora','Bageshwar','Chamoli','Champawat','Dehradun','Haridwar','Nainital','Pauri Garhwal','Pithoragarh','Rudraprayag','Tehri Garhwal','Udham Singh Nagar','Uttarkashi'],
   'West Bengal': ['Alipurduar','Bankura','Birbhum','Cooch Behar','Dakshin Dinajpur','Darjeeling','Hooghly','Howrah','Jalpaiguri','Jhargram','Kalimpong','Kolkata','Malda','Murshidabad','Nadia','North 24 Parganas','Paschim Bardhaman','Paschim Medinipur','Purba Bardhaman','Purba Medinipur','Purulia','South 24 Parganas','Uttar Dinajpur'],
   'Andaman and Nicobar Islands': ['Nicobar','North and Middle Andaman','South Andaman'],
   'Chandigarh': ['Chandigarh'],
@@ -292,7 +294,7 @@ function AlHidayaChatbot() {
         {isOpen ? <X size={24} /> : <MessageCircle size={25} />}
       </button>
     </div>
-    )
+  )
 }
 
 function RegistrationCardPage() {
@@ -522,6 +524,34 @@ function RegistrationCardPage() {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
+  useEffect(() => {
+    const elements = document.querySelectorAll('[data-scroll-animate]')
+
+    if (!('IntersectionObserver' in window)) {
+      elements.forEach(element => element.classList.add('is-visible'))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      }
+    )
+
+    elements.forEach(element => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [])
+
   const [form, setForm] = useState({
     full_name: '',
     phone: '',
@@ -661,8 +691,10 @@ function App() {
             Register now <ArrowUpRight size={16} />
           </a>
         </nav>
-      </header>      <main id="home">
-        <section className="hero">
+      </header>
+
+      <main id="home">
+        <section className="hero" data-scroll-animate>
           <div className="heroGlow"></div>
 
           <div className="heroCopy">
@@ -710,25 +742,25 @@ function App() {
           </div>
         </section>
 
-        <section className="stats">
-          <div>
+        <section className="stats" data-scroll-animate>
+          <div data-scroll-animate>
             <span>01</span>
             <b>27 JAN</b>
             <small>2027 · EVENT DATE</small>
           </div>
-          <div>
+          <div data-scroll-animate>
             <span>02</span>
             <b>QURAN</b>
             <small>KNOWLEDGE & EXCELLENCE</small>
           </div>
-          <div>
+          <div data-scroll-animate>
             <span>03</span>
             <b>₹1 LAKH</b>
             <small>FIRST PRIZE</small>
           </div>
         </section>
 
-        <section className="section about" id="about">
+        <section className="section about" id="about" data-scroll-animate>
           <div className="sectionLabel">THE EVENT</div>
           <h2>
             Knowledge that brings
@@ -742,17 +774,17 @@ function App() {
           </p>
 
           <div className="featureGrid">
-            <article>
+            <article data-scroll-animate>
               <BookOpen />
               <h3>Deep understanding</h3>
               <p>Explore Quranic meanings and teachings through learning and reflection.</p>
             </article>
-            <article>
+            <article data-scroll-animate>
               <Trophy />
               <h3>Recognising excellence</h3>
               <p>Compete for prestigious prizes and certificates.</p>
             </article>
-            <article>
+            <article data-scroll-animate>
               <ShieldCheck />
               <h3>Participant details</h3>
               <p>Share your details with the event organisers. They will contact you with further information.</p>
@@ -760,22 +792,22 @@ function App() {
           </div>
         </section>
 
-        <section className="prizeSection" id="prizes">
+        <section className="prizeSection" id="prizes" data-scroll-animate>
           <div className="sectionLabel light">AWARDS & RECOGNITION</div>
           <h2>Big rewards. <em>Greater purpose.</em></h2>
 
           <div className="prizeGrid">
-            <div className="prizeCard first">
+            <div className="prizeCard first" data-scroll-animate>
               <small>1ST PRIZE</small>
               <strong>₹1,00,000</strong>
               <span>WITH CERTIFICATE</span>
             </div>
-            <div className="prizeCard second">
+            <div className="prizeCard second" data-scroll-animate>
               <small>2ND PRIZE</small>
               <strong>₹50,000</strong>
               <span>WITH CERTIFICATE</span>
             </div>
-            <div className="prizeCard third">
+            <div className="prizeCard third" data-scroll-animate>
               <small>3RD PRIZE</small>
               <strong>₹25,000</strong>
               <span>WITH CERTIFICATE</span>
@@ -783,7 +815,7 @@ function App() {
           </div>
         </section>
 
-        <section className="section registerSection" id="register">
+        <section className="section registerSection" id="register" data-scroll-animate>
           <div className="registerIntro">
             <div className="sectionLabel">TAKE PART</div>
             <h2>
@@ -797,7 +829,7 @@ function App() {
             </p>
           </div>
 
-          <form className="regForm" onSubmit={submit}>
+          <form className="regForm" onSubmit={submit} data-scroll-animate>
             <div className="formHead">
               <div>
                 <span>PARTICIPANT DETAILS</span>
@@ -962,9 +994,12 @@ function App() {
               Our organisers will contact you through WhatsApp.
             </p>
           </form>
-        </section>        <section
+        </section>
+
+        <section
           className="section"
           id="contact"
+          data-scroll-animate
           style={{ paddingTop: '72px', paddingBottom: '80px' }}
         >
           <div className="sectionLabel">GET IN TOUCH</div>
@@ -977,7 +1012,7 @@ function App() {
             gap: '18px',
             marginTop: '32px'
           }}>
-            <article style={{
+            <article data-scroll-animate style={{
               padding: '24px',
               border: '1px solid rgba(255,255,255,0.14)',
               borderRadius: '16px'
@@ -986,7 +1021,7 @@ function App() {
               <a href="mailto:ahiuofficial@gmail.com">ahiuofficial@gmail.com</a>
             </article>
 
-            <article style={{
+            <article data-scroll-animate style={{
               padding: '24px',
               border: '1px solid rgba(255,255,255,0.14)',
               borderRadius: '16px'
@@ -997,7 +1032,7 @@ function App() {
               <p><a href="tel:+919497167463">+91 9497167463</a></p>
             </article>
 
-            <article style={{
+            <article data-scroll-animate style={{
               padding: '24px',
               border: '1px solid rgba(255,255,255,0.14)',
               borderRadius: '16px'
@@ -1016,7 +1051,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="footer">
+      <footer className="footer" data-scroll-animate>
         <div className="footerMain">
           <div className="footerBrand">
             <img
