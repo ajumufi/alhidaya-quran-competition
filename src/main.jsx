@@ -922,6 +922,85 @@ function App() {
           .custom-cursor-ring {
             transition: none !important;
           }
+        }        /* College Photo 3D Entrance Animation */
+
+        .posterFrame {
+          position: relative;
+          overflow: visible !important;
+          perspective: 1000px;
+        }
+
+        .college-reveal-card {
+          position: absolute;
+          z-index: 10;
+          width: clamp(150px, 20vw, 230px);
+          left: -55px;
+          bottom: -42px;
+          padding: 7px;
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.13);
+          border: 1px solid rgba(100, 205, 255, 0.55);
+          box-shadow:
+            0 18px 45px rgba(0, 0, 0, 0.28),
+            0 0 28px rgba(40, 150, 255, 0.25);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          opacity: 0;
+          transform-origin: center;
+          animation: collegePopIn 1.3s cubic-bezier(.16, 1, .3, 1) 0.35s forwards;
+        }
+
+        .college-reveal-card img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          object-fit: cover;
+          border-radius: 12px;
+          animation: collegeImageFloat 5s ease-in-out 1.7s infinite;
+        }
+
+        @keyframes collegePopIn {
+          0% {
+            opacity: 0;
+            transform: translate3d(0, 90px, -180px) scale(.45) rotateX(25deg);
+          }
+
+          65% {
+            opacity: 1;
+            transform: translate3d(0, -8px, 20px) scale(1.06) rotateX(-3deg);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1) rotateX(0);
+          }
+        }
+
+        @keyframes collegeImageFloat {
+          0%, 100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-7px);
+          }
+        }
+
+        @media (max-width: 700px) {
+          .college-reveal-card {
+            width: 145px;
+            left: -5px;
+            bottom: -35px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .college-reveal-card,
+          .college-reveal-card img {
+            animation: none !important;
+            opacity: 1;
+            transform: none;
+          }
         }
       `}</style>
 
@@ -1002,12 +1081,19 @@ function App() {
             </a>
           </div>
 
-          <div className="posterFrame">
+              <div className="posterFrame">
             <div className="posterTag">OFFICIAL EVENT POSTER</div>
             <img
               src="/assets/event-poster.jpg"
               alt="Quran Interpretation Competition official poster"
             />
+
+            <div className="college-reveal-card">
+              <img
+                src="/college.jpg"
+                alt="Al Hidaya Islamic University Campus"
+              />
+            </div>
           </div>
         </section>
 
