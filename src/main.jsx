@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createClient } from '@supabase/supabase-js'
 import {
@@ -58,6 +58,101 @@ const districtsByState = {
   'Puducherry': ['Karaikal','Mahe','Puducherry','Yanam']
 }
 
+/* Custom desktop cursor */
+function CustomCursor() {
+  const dotRef = useRef(null)
+  const ringRef = useRef(null)
+
+  useEffect(() => {
+    const finePointer = window.matchMedia(
+      '(hover: hover) and (pointer: fine)'
+    ).matches
+
+    if (!finePointer) return
+
+    const dot = dotRef.current
+    const ring = ringRef.current
+
+    if (!dot || !ring) return
+
+    let mouseX = -100
+    let mouseY = -100
+    let ringX = -100
+    let ringY = -100
+    let animationFrame
+
+    const moveCursor = event => {
+      mouseX = event.clientX
+      mouseY = event.clientY
+
+      dot.style.transform =
+        `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`
+
+      dot.style.opacity = '1'
+      ring.style.opacity = '1'
+
+      const target = event.target
+      const interactive = target?.closest?.(
+        'a, button, input, select, textarea, [role="button"]'
+      )
+
+      ring.classList.toggle('cursor-hover', Boolean(interactive))
+    }
+
+    const animateRing = () => {
+      ringX += (mouseX - ringX) * 0.18
+      ringY += (mouseY - ringY) * 0.18
+
+      ring.style.transform =
+        `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`
+
+      animationFrame = requestAnimationFrame(animateRing)
+    }
+
+    const hideCursor = () => {
+      dot.style.opacity = '0'
+      ring.style.opacity = '0'
+    }
+
+    const showCursor = () => {
+      dot.style.opacity = '1'
+      ring.style.opacity = '1'
+    }
+
+    document.addEventListener('pointermove', moveCursor)
+    document.addEventListener('pointerleave', hideCursor)
+    document.addEventListener('pointerenter', showCursor)
+
+    animationFrame = requestAnimationFrame(animateRing)
+
+    return () => {
+      document.removeEventListener('pointermove', moveCursor)
+      document.removeEventListener('pointerleave', hideCursor)
+      document.removeEventListener('pointerenter', showCursor)
+      cancelAnimationFrame(animationFrame)
+    }
+  }, [])
+
+  return (
+    <>
+      <div className="custom-cursor-ring" ref={ringRef} aria-hidden="true" />
+      <div className="custom-cursor-dot" ref={dotRef} aria-hidden="true" />
+    </>
+  )
+}
+
+/* Subtle animated glass background */
+function GlassBackground() {
+  return (
+    <div className="ambient-glass-layer" aria-hidden="true">
+      <div className="glass-orb glass-orb-one" />
+      <div className="glass-orb glass-orb-two" />
+      <div className="glass-orb glass-orb-three" />
+      <div className="glass-orb glass-orb-four" />
+    </div>
+  )
+}
+
 function AlHidayaChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [question, setQuestion] = useState('')
@@ -68,7 +163,7 @@ function AlHidayaChatbot() {
     }
   ])
 
-  const getReply = (rawQuestion) => {
+  const getReply = rawQuestion => {
     const q = rawQuestion.toLowerCase().replace(/[?.,!]/g, ' ').trim()
     const has = (...words) => words.some(word => q.includes(word))
 
@@ -107,7 +202,7 @@ function AlHidayaChatbot() {
     return 'I can help with registration, competition date, venue, prizes, registration card and contact details. Please ask about one of these topics.\n\nരജിസ്ട്രേഷൻ, മത്സരത്തീയതി, വേദി, സമ്മാനങ്ങൾ, രജിസ്ട്രേഷൻ കാർഡ്, ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ എന്നിവ ചോദിക്കാം.'
   }
 
-  const sendMessage = (e) => {
+  const sendMessage = e => {
     e?.preventDefault()
     const cleanQuestion = question.trim()
     if (!cleanQuestion) return
@@ -162,10 +257,12 @@ function AlHidayaChatbot() {
             }}>
               <Bot size={21} />
             </div>
+
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 800, fontSize: '14px' }}>Al Hidaya Assistant</div>
               <div style={{ fontSize: '11px', opacity: 0.8 }}>Competition information · 2027</div>
             </div>
+
             <button
               type="button"
               onClick={() => setIsOpen(false)}
@@ -233,6 +330,7 @@ function AlHidayaChatbot() {
                 </button>
               ))}
             </div>
+
             <form onSubmit={sendMessage} style={{ display: 'flex', gap: '7px' }}>
               <input
                 value={question}
@@ -249,6 +347,7 @@ function AlHidayaChatbot() {
                   fontSize: '13px'
                 }}
               />
+
               <button
                 type="submit"
                 aria-label="Send message"
@@ -655,7 +754,177 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="site-root">
+      <GlassBackground />
+      <CustomCursor />
+
+      <style>{`
+        .site-root {
+          position: relative;
+          isolation: isolate;
+          min-height: 100vh;
+        }
+
+        .site-root > :not(.ambient-glass-layer):not(.custom-cursor-ring):not(.custom-cursor-dot) {
+          position: relative;
+          z-index: 1;
+        }
+
+        .ambient-glass-layer {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+          contain: strict;
+        }
+
+        .glass-orb {
+          position: absolute;
+          display: block;
+          border-radius: 50%;
+          pointer-events: none;
+          background: linear-gradient(
+            135deg,
+            rgba(71, 123, 255, 0.10),
+            rgba(22, 184, 207, 0.045),
+            rgba(255, 255, 255, 0.025)
+          );
+          border: 1px solid rgba(115, 173, 255, 0.13);
+          box-shadow:
+            inset 0 0 35px rgba(115, 173, 255, 0.045),
+            0 0 55px rgba(40, 89, 232, 0.045);
+          backdrop-filter: blur(3px);
+          -webkit-backdrop-filter: blur(3px);
+          will-change: transform;
+        }
+
+        .glass-orb-one {
+          width: 260px;
+          height: 260px;
+          top: 12%;
+          left: -100px;
+          animation: glassFloatOne 19s ease-in-out infinite alternate;
+        }
+
+        .glass-orb-two {
+          width: 190px;
+          height: 190px;
+          top: 48%;
+          right: -65px;
+          animation: glassFloatTwo 23s ease-in-out infinite alternate;
+        }
+
+        .glass-orb-three {
+          width: 130px;
+          height: 130px;
+          top: 75%;
+          left: 18%;
+          animation: glassFloatThree 17s ease-in-out infinite alternate;
+        }
+
+        .glass-orb-four {
+          width: 90px;
+          height: 90px;
+          top: 28%;
+          right: 20%;
+          animation: glassFloatTwo 21s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes glassFloatOne {
+          from { transform: translate3d(0, 0, 0) rotate(0deg); }
+          to { transform: translate3d(45px, 65px, 0) rotate(24deg); }
+        }
+
+        @keyframes glassFloatTwo {
+          from { transform: translate3d(0, 0, 0) scale(1); }
+          to { transform: translate3d(-45px, -55px, 0) scale(1.12); }
+        }
+
+        @keyframes glassFloatThree {
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(35px, -45px, 0); }
+        }
+
+        .custom-cursor-dot,
+        .custom-cursor-ring {
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 100000;
+          pointer-events: none;
+          opacity: 0;
+          border-radius: 50%;
+          will-change: transform;
+        }
+
+        .custom-cursor-dot {
+          width: 7px;
+          height: 7px;
+          background: #48d9ff;
+          box-shadow:
+            0 0 8px #48d9ff,
+            0 0 18px rgba(72, 217, 255, 0.8);
+          transition: opacity 0.2s ease;
+        }
+
+        .custom-cursor-ring {
+          width: 34px;
+          height: 34px;
+          border: 1px solid rgba(72, 217, 255, 0.65);
+          background: rgba(72, 217, 255, 0.045);
+          box-shadow:
+            0 0 14px rgba(72, 217, 255, 0.13),
+            inset 0 0 10px rgba(72, 217, 255, 0.06);
+          transition:
+            width 0.22s ease,
+            height 0.22s ease,
+            border-color 0.22s ease,
+            background 0.22s ease,
+            opacity 0.2s ease;
+        }
+
+        .custom-cursor-ring.cursor-hover {
+          width: 52px;
+          height: 52px;
+          border-color: rgba(72, 217, 255, 0.95);
+          background: rgba(72, 217, 255, 0.10);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .site-root,
+          .site-root a,
+          .site-root button,
+          .site-root input,
+          .site-root select,
+          .site-root textarea {
+            cursor: none !important;
+          }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+          .custom-cursor-dot,
+          .custom-cursor-ring {
+            display: none !important;
+          }
+
+          .glass-orb {
+            animation-duration: 30s;
+            opacity: 0.65;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .glass-orb {
+            animation: none !important;
+          }
+
+          .custom-cursor-ring {
+            transition: none !important;
+          }
+        }
+      `}</style>
+
       <div className="topline">
         <span>AL HIDAYA ISLAMIC UNIVERSITY</span>
         <span>QURAN INTERPRETATION COMPETITION · 2027</span>
