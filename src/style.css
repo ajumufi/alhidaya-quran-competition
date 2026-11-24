@@ -1,11 +1,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
+/* ==================================
+   ROOT & GLOBAL
+================================== */
+
 :root {
   font-family: 'Manrope', 'Noto Sans Malayalam', sans-serif;
   color: #17243d;
   background: #f6f8fc;
   font-synthesis: none;
+
   --navy: #101d3a;
   --deep: #0a1530;
   --blue: #2859e8;
@@ -42,6 +47,10 @@ select {
   font-family: inherit;
 }
 
+/* ==================================
+   TOP BAR
+================================== */
+
 .topline {
   min-height: 31px;
   background: var(--deep);
@@ -54,6 +63,10 @@ select {
   letter-spacing: 1.4px;
   font-weight: 700;
 }
+
+/* ==================================
+   HEADER & NAVIGATION
+================================== */
 
 .header {
   height: 82px;
@@ -110,11 +123,12 @@ select {
 
 .nav a:not(.navCta) {
   color: #5b6880;
-  transition: color .25s ease;
+  transition: color .25s ease, transform .25s ease;
 }
 
 .nav a:not(.navCta):hover {
   color: var(--blue);
+  transform: translateY(-2px);
 }
 
 .navCta,
@@ -131,7 +145,7 @@ select {
   font-weight: 800;
   font-size: 12px;
   box-shadow: 0 8px 22px #2859e82b;
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
 
 .navCta:hover,
@@ -139,6 +153,13 @@ select {
 .submitBtn:hover {
   transform: translateY(-3px);
   box-shadow: 0 13px 28px #2859e845;
+  filter: brightness(1.08);
+}
+
+.primaryBtn:active,
+.submitBtn:active,
+.navCta:active {
+  transform: scale(.97);
 }
 
 .menuBtn {
@@ -149,6 +170,10 @@ select {
   cursor: pointer;
 }
 
+/* ==================================
+   HERO SECTION
+================================== */
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -158,6 +183,7 @@ select {
   grid-template-columns: 1.05fr .75fr;
   align-items: center;
   gap: 7%;
+
   background:
     radial-gradient(circle at 80% 20%, #2d64ed20, transparent 34%),
     radial-gradient(circle at 10% 90%, #16b8cf18, transparent 30%),
@@ -189,17 +215,59 @@ select {
   filter: blur(90px);
   border-radius: 50%;
   pointer-events: none;
+  animation: glowPulse 5s ease-in-out infinite;
 }
 
 .heroCopy,
 .posterFrame {
   position: relative;
   z-index: 1;
-  animation: fadeUp .8s ease both;
+}
+
+.heroCopy {
+  animation: fadeLeft .9s ease both;
 }
 
 .posterFrame {
-  animation-delay: .15s;
+  animation: fadeRight .9s ease .15s both;
+  max-width: 390px;
+  justify-self: center;
+  padding: 12px;
+  background: white;
+  border: 1px solid #e8edf6;
+  border-radius: 13px;
+  box-shadow: 0 28px 75px #142b5525;
+  transform: rotate(1deg);
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.posterFrame:hover {
+  transform: rotate(0) translateY(-5px);
+  box-shadow: 0 35px 85px #142b5530;
+}
+
+.posterFrame img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+  transition: transform .6s ease;
+}
+
+.posterFrame:hover img {
+  transform: scale(1.025);
+}
+
+.posterTag {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  background: var(--blue);
+  color: white;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  padding: 9px 11px;
+  border-radius: 5px;
+  z-index: 2;
 }
 
 .eyebrow,
@@ -287,41 +355,9 @@ select {
   padding: 16px 24px;
 }
 
-.posterFrame {
-  max-width: 390px;
-  justify-self: center;
-  padding: 12px;
-  background: white;
-  border: 1px solid #e8edf6;
-  border-radius: 13px;
-  box-shadow: 0 28px 75px #142b5525;
-  transform: rotate(1deg);
-  transition: transform .4s ease, box-shadow .4s ease;
-}
-
-.posterFrame:hover {
-  transform: rotate(0) translateY(-5px);
-  box-shadow: 0 35px 85px #142b5530;
-}
-
-.posterFrame img {
-  width: 100%;
-  display: block;
-  border-radius: 6px;
-}
-
-.posterTag {
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  background: var(--blue);
-  color: white;
-  font-size: 8px;
-  letter-spacing: 1.5px;
-  padding: 9px 11px;
-  border-radius: 5px;
-  z-index: 2;
-}
+/* ==================================
+   STATS SECTION
+================================== */
 
 .stats {
   background: linear-gradient(110deg, var(--deep), #172e59);
@@ -338,10 +374,15 @@ select {
   align-items: center;
   column-gap: 14px;
   border-right: 1px solid #ffffff20;
+  transition: transform .3s ease;
 }
 
 .stats div:last-child {
   border: 0;
+}
+
+.stats div:hover {
+  transform: translateY(-5px);
 }
 
 .stats div > span {
@@ -361,6 +402,10 @@ select {
   color: #b4c8ee;
   margin-top: 4px;
 }
+
+/* ==================================
+   COMMON SECTIONS
+================================== */
 
 .section {
   padding: 105px 10%;
@@ -394,6 +439,10 @@ select {
   font-size: 13px;
 }
 
+/* ==================================
+   FEATURE CARDS
+================================== */
+
 .featureGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -408,11 +457,14 @@ select {
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 8px 28px #182c5008;
-  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
 }
 
 .featureGrid article:hover {
-  transform: translateY(-6px);
+  transform: translateY(-7px);
   box-shadow: 0 18px 40px #182c5014;
   border-color: #cbd9ff;
 }
@@ -420,6 +472,11 @@ select {
 .featureGrid svg {
   color: var(--blue);
   width: 25px;
+  transition: transform .35s ease;
+}
+
+.featureGrid article:hover svg {
+  transform: translateY(-5px) scale(1.12);
 }
 
 .featureGrid h3 {
@@ -434,6 +491,10 @@ select {
   color: var(--muted);
   margin: 0;
 }
+
+/* ==================================
+   PRIZE SECTION
+================================== */
 
 .prizeSection {
   padding: 88px 10%;
@@ -473,11 +534,11 @@ select {
   flex-direction: column;
   gap: 10px;
   backdrop-filter: blur(10px);
-  transition: transform .3s ease, background .3s ease;
+  transition: transform .35s ease, background .35s ease;
 }
 
 .prizeCard:hover {
-  transform: translateY(-6px);
+  transform: translateY(-7px);
   background: #ffffff17;
 }
 
@@ -516,6 +577,10 @@ select {
   color: #c1d0ec;
 }
 
+/* ==================================
+   REGISTRATION SECTION
+================================== */
+
 .registerSection {
   display: grid;
   grid-template-columns: .8fr 1.2fr;
@@ -541,6 +606,10 @@ select {
   color: var(--muted);
   max-width: 350px;
 }
+
+/* ==================================
+   REGISTRATION FORM
+================================== */
 
 .regForm {
   background: white;
@@ -600,7 +669,10 @@ select {
   color: var(--navy);
   outline: none;
   border-radius: 8px;
-  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
 }
 
 .field input:focus,
@@ -682,6 +754,10 @@ select {
   margin: 15px 0 0;
 }
 
+/* ==================================
+   ALERTS & REGISTRATION CODE
+================================== */
+
 .alert {
   padding: 13px;
   margin-bottom: 18px;
@@ -706,6 +782,10 @@ select {
   display: block;
   margin-top: 8px;
 }
+
+/* ==================================
+   FOOTER
+================================== */
 
 .footer {
   background: var(--deep);
@@ -764,10 +844,14 @@ select {
   color: #91a7ca;
 }
 
+/* ==================================
+   ANIMATION KEYFRAMES
+================================== */
+
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -775,7 +859,77 @@ select {
   }
 }
 
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: .65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ==================================
+   SCROLL REVEAL ANIMATION
+================================== */
+
+[data-scroll-animate] {
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity .8s ease,
+    transform .8s cubic-bezier(.22, 1, .36, 1);
+}
+
+[data-scroll-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered cards */
+
+.featureGrid article[data-scroll-animate],
+.prizeCard[data-scroll-animate] {
+  transition-delay: .1s;
+}
+
+.featureGrid article:nth-child(2)[data-scroll-animate],
+.prizeCard.second[data-scroll-animate] {
+  transition-delay: .2s;
+}
+
+.featureGrid article:nth-child(3)[data-scroll-animate],
+.prizeCard.third[data-scroll-animate] {
+  transition-delay: .3s;
+}
+
+/* ==================================
+   TABLET RESPONSIVE
+================================== */
+
 @media (max-width: 800px) {
+
   .topline {
     padding: 0 4%;
     font-size: 7px;
@@ -891,9 +1045,15 @@ select {
     order: 3;
     width: 100%;
   }
+
 }
 
+/* ==================================
+   MOBILE RESPONSIVE
+================================== */
+
 @media (max-width: 520px) {
+
   .hero {
     padding-top: 48px;
   }
@@ -906,6 +1066,14 @@ select {
   .heroMeta {
     flex-direction: column;
     gap: 12px;
+  }
+
+  .posterFrame {
+    animation: fadeUp .9s ease .1s both;
+  }
+
+  .heroGlow {
+    animation: none;
   }
 
   .stats {
@@ -962,279 +1130,33 @@ select {
   .programmeHeading > img {
     max-height: 110px;
   }
+
+  [data-scroll-animate] {
+    transform: translateY(20px);
+    transition-duration: .65s;
+  }
+
 }
 
+/* ==================================
+   ACCESSIBILITY
+================================== */
+
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-}
 
-/* ==================================
-   PREMIUM WEBSITE ANIMATIONS
-================================== */
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(35px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-35px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeRight {
-  from {
-    opacity: 0;
-    transform: translateX(35px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes floatPoster {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 190, 255, 0.10);
-  }
-  50% {
-    box-shadow: 0 0 38px rgba(0, 190, 255, 0.25);
-  }
-}
-
-/* Hero entrance */
-
-.heroCopy {
-  animation: fadeLeft 1s ease both;
-}
-
-.posterFrame {
-  animation: fadeRight 1s ease both, floatPoster 5s ease-in-out 1s infinite;
-}
-
-.heroGlow {
-  animation: glowPulse 5s ease-in-out infinite;
-}
-
-/* Scroll reveal */
-
-@supports (animation-timeline: view()) {
-  .stats > div,
-  .section,
-  .prizeCard,
-  .featureGrid article,
-  .regForm,
-  .footerMain {
-    animation: fadeUp linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
-}
-
-/* Staggered card animations */
-
-.featureGrid article:nth-child(2) {
-  animation-delay: 100ms;
-}
-
-.featureGrid article:nth-child(3) {
-  animation-delay: 200ms;
-}
-
-/* Card hover effects */
-
-.featureGrid article,
-.prizeCard,
-.stats > div {
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
-}
-
-.featureGrid article:hover,
-.prizeCard:hover,
-.stats > div:hover {
-  transform: translateY(-9px);
-  box-shadow: 0 18px 40px rgba(0, 130, 220, 0.16);
-}
-
-/* Icon movement */
-
-.featureGrid article svg {
-  transition: transform 0.35s ease;
-}
-
-.featureGrid article:hover svg {
-  transform: translateY(-5px) scale(1.12);
-}
-
-/* Button animations */
-
-.primaryBtn,
-.submitBtn,
-.navCta {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    filter 0.3s ease;
-}
-
-.primaryBtn:hover,
-.submitBtn:hover,
-.navCta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0, 150, 255, 0.25);
-  filter: brightness(1.08);
-}
-
-.primaryBtn:active,
-.submitBtn:active,
-.navCta:active {
-  transform: scale(0.97);
-}
-
-/* Navigation hover */
-
-.nav a {
-  transition: color 0.25s ease, transform 0.25s ease;
-}
-
-.nav a:hover {
-  transform: translateY(-2px);
-}
-
-/* Poster interaction */
-
-.posterFrame img {
-  transition: transform 0.6s ease;
-}
-
-.posterFrame:hover img {
-  transform: scale(1.035);
-}
-
-/* Form interaction */
-
-.regForm input,
-.regForm select {
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.regForm input:focus,
-.regForm select:focus {
-  box-shadow: 0 0 0 4px rgba(0, 160, 255, 0.12);
-}
-
-/* Mobile performance */
-
-@media (max-width: 768px) {
-  .posterFrame {
-    animation: fadeUp 0.9s ease both;
-  }
-
-  .heroGlow {
-    animation: none;
-  }
-
-  .featureGrid article:hover,
-  .prizeCard:hover,
-  .stats > div:hover {
-    transform: translateY(-4px);
-  }
-}
-
-/* Accessibility */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ==================================
-   SCROLL REVEAL ANIMATION
-================================== */
-
-[data-scroll-animate] {
-  opacity: 0;
-  transform: translateY(35px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-[data-scroll-animate].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered card animation */
-
-.featureGrid article[data-scroll-animate],
-.prizeCard[data-scroll-animate] {
-  transition-delay: 0.1s;
-}
-
-.featureGrid article:nth-child(2)[data-scroll-animate],
-.prizeCard.second[data-scroll-animate] {
-  transition-delay: 0.2s;
-}
-
-.featureGrid article:nth-child(3)[data-scroll-animate],
-.prizeCard.third[data-scroll-animate] {
-  transition-delay: 0.3s;
-}
-
-/* Mobile optimization */
-
-@media (max-width: 768px) {
   [data-scroll-animate] {
-    transform: translateY(20px);
-    transition-duration: 0.65s;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
-}
 
-/* Accessibility */
-
-@media (prefers-reduced-motion: reduce) {
-  [data-scroll-animate] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
