@@ -177,10 +177,10 @@ select {
 .hero {
   position: relative;
   overflow: hidden;
-  min-height: 640px;
-  padding: 85px 8%;
+  min-height: 470px;
+  padding: 75px 8%;
   display: grid;
-  grid-template-columns: 1.05fr .75fr;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: 7%;
 
@@ -1159,4 +1159,35 @@ select {
     transition: none !important;
   }
 
+}
+
+
+/* Event poster replaces the registration introduction text */
+.registerPosterIntro {
+  position: sticky;
+  top: 130px;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.registrationEventPoster {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 160px);
+  object-fit: contain;
+  object-position: top center;
+  border-radius: 14px;
+  box-shadow: 0 22px 60px rgba(20, 43, 85, .16);
+}
+
+@media (max-width: 800px) {
+  .registerPosterIntro {
+    position: static;
+    max-width: 340px;
+  }
+  .registrationEventPoster {
+    max-height: none;
+  }
 }

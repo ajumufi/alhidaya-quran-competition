@@ -931,57 +931,64 @@ function App() {
   }
 }
 
-/* College Building Rise Animation */
-.college-stage {
-  position: absolute;
-  right: -2%;
-  bottom: 0;
-  width: 62%;
-  height: 100%;
+/* Full-width college banner with a curved lower centre */
+.college-banner {
+  position: relative;
+  width: min(96%, 1720px);
+  height: clamp(220px, 30vw, 430px);
+  margin: 22px auto 0;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 0;
-  pointer-events: none;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  border-radius: 34px 34px 70px 70px;
+  background: #eaf0fb;
+  box-shadow: 0 22px 55px rgba(16, 29, 58, .14);
+  isolation: isolate;
+  animation: bannerReveal 1.1s cubic-bezier(.16, 1, .3, 1) both;
 }
 
-.college-stage img {
+.college-banner::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  width: clamp(150px, 24vw, 340px);
+  height: clamp(70px, 10vw, 140px);
+  left: 50%;
+  bottom: -1px;
+  transform: translateX(-50%);
+  background: #f6f8fc;
+  border-radius: 0 0 50% 50%;
+  clip-path: ellipse(50% 50% at 50% 100%);
+  pointer-events: none;
+}
+
+.college-banner img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: bottom center;
-  opacity: 0;
-  transform: translateY(100%);
-  animation: collegeRise 2s cubic-bezier(.16, 1, .3, 1) .4s forwards;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, .16));
+  object-fit: cover;
+  object-position: center 48%;
+  animation: bannerImageReveal 1.5s cubic-bezier(.16, 1, .3, 1) .15s both;
 }
 
-@keyframes collegeRise {
-  0% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  70% {
-    opacity: 1;
-    transform: translateY(-2%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes bannerReveal {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bannerImageReveal {
+  from { opacity: .4; transform: scale(1.06); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @media (max-width: 700px) {
-  .college-stage {
-    width: 100%;
-    height: 48%;
-    right: 0;
-    bottom: 0;
+  .college-banner {
+    width: 94%;
+    height: 190px;
+    margin-top: 14px;
+    border-radius: 22px 22px 48px 48px;
+  }
+  .college-banner::after {
+    width: 150px;
+    height: 62px;
   }
 }
 
@@ -1024,6 +1031,10 @@ function App() {
         </nav>
       </header>
 
+      <div className="college-banner" aria-label="Al Hidaya Islamic University campus">
+        <img src="/assets/college.jpg" alt="Al Hidaya Islamic University Campus" />
+      </div>
+
       <main id="home">
         <section className="hero" data-scroll-animate>
           <div className="heroGlow"></div>
@@ -1064,12 +1075,6 @@ function App() {
             </a>
           </div>
 
-             <div className="college-stage">
-  <img
-    src="/assets/college.jpg"
-    alt="Al Hidaya Islamic University Campus"
-  />
-</div>
         </section>
 
         <section className="stats" data-scroll-animate>
@@ -1146,17 +1151,12 @@ function App() {
         </section>
 
         <section className="section registerSection" id="register" data-scroll-animate>
-          <div className="registerIntro">
-            <div className="sectionLabel">TAKE PART</div>
-            <h2>
-              Your journey
-              <br />
-              starts <em>here.</em>
-            </h2>
-            <p>
-              Fill in your details. Our organisers will contact you
-              through WhatsApp with further information.
-            </p>
+          <div className="registerIntro registerPosterIntro">
+            <img
+              className="registrationEventPoster"
+              src="/assets/event-poster.jpg"
+              alt="Quran Interpretation Competition event poster"
+            />
           </div>
 
           <form className="regForm" onSubmit={submit} data-scroll-animate>
