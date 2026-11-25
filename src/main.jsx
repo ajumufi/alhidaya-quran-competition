@@ -582,7 +582,23 @@ function RegistrationCardPage() {
           >
             Print / Save Card
           </button>
-
+<a
+  href="https://chat.whatsapp.com/GbVc4sF15DA5aINyHOcguf?s=cl&p=a&iam=2"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    padding: '11px 20px',
+    border: '1px solid #25D366',
+    borderRadius: '8px',
+    background: '#25D366',
+    color: '#fff',
+    textDecoration: 'none',
+    fontWeight: 800,
+    cursor: 'pointer'
+  }}
+>
+  JOIN WHATSAPP GROUP
+</a>
           <a
             href="/"
             style={{
