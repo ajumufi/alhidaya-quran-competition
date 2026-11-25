@@ -976,35 +976,64 @@ function App() {
   pointer-events: none;
 }
 
-.college-banner img {
+.college-banner-photo {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 48%;
-  animation: bannerImageReveal 1.5s cubic-bezier(.16, 1, .3, 1) .15s both;
+  animation: collegePhotoReveal 2s cubic-bezier(.16, 1, .3, 1) both;
 }
 
-@keyframes bannerReveal {
-  from { opacity: 0; transform: translateY(28px); }
-  to { opacity: 1; transform: translateY(0); }
+.college-logo-circle {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: clamp(115px, 16vw, 190px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 12px;
+  background: rgba(255, 255, 255, .94);
+  border: 4px solid #d9b65c;
+  box-shadow:
+    0 0 0 7px rgba(255,255,255,.28),
+    0 12px 40px rgba(0,0,0,.3);
+  animation: collegeLogoReveal 1.2s cubic-bezier(.16, 1, .3, 1) .7s both;
 }
 
-@keyframes bannerImageReveal {
-  from { opacity: .4; transform: scale(1.06); }
-  to { opacity: 1; transform: scale(1); }
+.college-logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
-@media (max-width: 700px) {
-  .college-banner {
-    width: 94%;
-    height: 190px;
-    margin-top: 14px;
-    border-radius: 22px 22px 48px 48px;
+@keyframes collegePhotoReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+    filter: blur(5px);
   }
-  .college-banner::after {
-    width: 150px;
-    height: 62px;
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes collegeLogoReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.45);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -1048,8 +1077,21 @@ function App() {
       </header>
 
       <div className="college-banner" aria-label="Al Hidaya Islamic University campus">
-        <img src="/assets/college.jpg" alt="Al Hidaya Islamic University Campus" />
-      </div>
+
+  <img
+    className="college-banner-photo"
+    src="/assets/college.jpg"
+    alt="Al Hidaya Islamic University Campus"
+  />
+
+  <div className="college-logo-circle">
+    <img
+      src="/assets/college-logo.png"
+      alt="Al Hidaya Islamic University Logo"
+    />
+  </div>
+
+</div>
 
       <main id="home">
         <section className="hero" data-scroll-animate>
