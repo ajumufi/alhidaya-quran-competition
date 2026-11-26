@@ -168,7 +168,7 @@ function AlHidayaChatbot() {
     const has = (...words) => words.some(word => q.includes(word))
 
     if (has('date', 'when', 'തീയതി', 'എപ്പോൾ', 'eppol', 'epo')) {
-      return 'The Quran Interpretation Competition will be held on 27 January 2027.\n\nമത്സരം 2027 ജനുവരി 27-നാണ് നടക്കുന്നത്.'
+      return 'The Hifz Competition will be held on 27 January 2027.\n\nമത്സരം 2027 ജനുവരി 27-നാണ് നടക്കുന്നത്.'
     }
 
     if (has('venue', 'where', 'location', 'സ്ഥലം', 'എവിടെ', 'evide', 'uliyil', 'kannur')) {
@@ -478,7 +478,7 @@ function RegistrationCardPage() {
           letterSpacing: '1px',
           margin: 0
         }}>
-          QURAN INTERPRETATION COMPETITION · 2027
+          HIFZ COMPETITION · 2027
         </p>
 
         <div style={{
@@ -1068,7 +1068,7 @@ function App() {
 
       <div className="topline">
         <span>AL HIDAYA ISLAMIC UNIVERSITY</span>
-        <span>QURAN INTERPRETATION COMPETITION · 2027</span>
+        <span>HIFZ COMPETITION · 2027</span>
       </div>
 
       <header className="header">
@@ -1138,7 +1138,7 @@ function App() {
               <div className="headingFallback">
                 <span>AL HIDAYA</span>
                 <h1>
-                  All India Quran
+                  All India Hifz
                   <br />
                   <em>Competition</em>
                 </h1>
@@ -1188,7 +1188,7 @@ function App() {
             <em>the Quran closer.</em>
           </h2>
           <p>
-            Join participants for an inspiring Quran Interpretation Competition.
+            Join participants for an inspiring Hifz Competition.
             Discover, understand and share the deep meanings and teachings
             of the Holy Quran.
           </p>
@@ -1240,7 +1240,7 @@ function App() {
             <img
               className="registrationEventPoster"
               src="/assets/event-poster.jpg"
-              alt="Quran Interpretation Competition event poster"
+              alt="Hifz Competition 2027 event poster"
             />
           </div>
 
@@ -1453,7 +1453,7 @@ function App() {
         >
           <div className="sectionLabel">GET IN TOUCH</div>
           <h2>Contact <em>Al Hidaya Islamic University.</em></h2>
-          <p>For enquiries about the Quran Interpretation Competition 2027, contact the college through the details below.</p>
+          <p>For enquiries about Hifz Competition 2027, contact the college through the details below.</p>
 
           <div style={{
             display: 'grid',
@@ -1529,7 +1529,7 @@ function App() {
 
         <div className="footerBottom">
           <span>© 2027 Al Hidaya Islamic University. All rights reserved.</span>
-          <span>Quran Interpretation Competition 2027</span>
+          <span>Hifz Competition 2027</span>
         </div>
       </footer>
 
