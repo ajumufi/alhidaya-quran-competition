@@ -672,6 +672,7 @@ function App() {
     phone: '',
     whatsapp: '',
     email: '',
+    date_of_birth: '',
     state: '',
     district: '',
     aadhaar_number: '',
@@ -682,6 +683,20 @@ function App() {
   const [photo, setPhoto] = useState(null)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState(null)
+
+  const calculateAge = dateOfBirth => {
+    if (!dateOfBirth) return null
+    const birthDate = new Date(`${dateOfBirth}T00:00:00`)
+    if (Number.isNaN(birthDate.getTime())) return null
+    const today = new Date()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDifference = today.getMonth() - birthDate.getMonth()
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) age--
+    return age
+  }
+
+  const participantAge = calculateAge(form.date_of_birth)
+  const todayDate = new Date().toISOString().slice(0, 10)
 
   const update = e => {
     setForm({
@@ -705,6 +720,17 @@ function App() {
     let photoPath = null
 
     try {
+      if (!form.date_of_birth) {
+        throw new Error('Please select your date of birth.')
+      }
+      const ageAtSubmission = calculateAge(form.date_of_birth)
+      if (ageAtSubmission === null || ageAtSubmission < 0) {
+        throw new Error('Please enter a valid date of birth.')
+      }
+      if (ageAtSubmission > 27) {
+        throw new Error('Registration is open only for participants aged 27 years or younger.')
+      }
+
       if (!/^\d{12}$/.test(form.aadhaar_number)) {
         throw new Error('Please enter a valid 12-digit Aadhaar number.')
       }
@@ -732,6 +758,7 @@ function App() {
           p_phone: form.phone.trim(),
           p_whatsapp: form.whatsapp.trim(),
           p_email: form.email.trim() || null,
+          p_date_of_birth: form.date_of_birth,
           p_state: form.state,
           p_district: form.district.trim(),
           p_aadhaar_number: form.aadhaar_number,
@@ -1319,6 +1346,40 @@ function App() {
               </div>
             </div>
 
+            <div className="twoFields">
+              <div className="field">
+                <label>Date of Birth *</label>
+                <input
+                  type="date"
+                  name="date_of_birth"
+                  value={form.date_of_birth}
+                  onChange={update}
+                  max={todayDate}
+                  required
+                />
+              </div>
+              <div className="field">
+                <label>Age</label>
+                <input
+                  type="text"
+                  value={participantAge === null ? '' : `${participantAge} Years`}
+                  readOnly
+                  placeholder="Age will appear here"
+                  aria-label="Calculated age"
+                />
+                {participantAge !== null && participantAge > 27 && (
+                  <small style={{ color: '#c62828', fontWeight: 700 }}>
+                    Age limit exceeded. Maximum allowed age is 27 years.
+                  </small>
+                )}
+                {participantAge !== null && participantAge >= 0 && participantAge <= 27 && (
+                  <small style={{ color: '#16834a', fontWeight: 700 }}>
+                    Eligible for registration.
+                  </small>
+                )}
+              </div>
+            </div>
+
             <div className="field">
               <label>Aadhaar Number (12 digits) *</label>
               <input
@@ -1372,7 +1433,7 @@ function App() {
               />
             </div>
 
-            <button className="submitBtn" disabled={busy}>
+            <button className="submitBtn" disabled={busy || (participantAge !== null && participantAge > 27)}>
               {busy ? 'Submitting…' : 'Submit Details'}
               <ArrowUpRight size={18} />
             </button>
