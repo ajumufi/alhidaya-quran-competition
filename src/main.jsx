@@ -989,18 +989,7 @@ function App() {
 }
 
 .college-banner::after {
-  content: '';
-  position: absolute;
-  z-index: 2;
-  width: clamp(150px, 24vw, 340px);
-  height: clamp(70px, 10vw, 140px);
-  left: 50%;
-  bottom: -1px;
-  transform: translateX(-50%);
-  background: #f6f8fc;
-  border-radius: 0 0 50% 50%;
-  clip-path: ellipse(50% 50% at 50% 100%);
-  pointer-events: none;
+  display: none;
 }
 
 .college-banner-photo {
